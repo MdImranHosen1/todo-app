@@ -38,11 +38,18 @@ const todosSlice = createSlice({
                 existingTodo.taskStatus = taskStatus;
             }
             localStorage.setItem("todos", JSON.stringify(state));
+        },
+        todoDeleted(state, action) {
+            const index = state.findIndex((todo) => todo.id === action.payload);
+            if (index !== -1) {
+                state.splice(index, 1);
+                localStorage.setItem("todos", JSON.stringify(state));
+            }
         }
     }
 
 })
 
-export const { todoAdded, todoUpdated } = todosSlice.actions
+export const { todoAdded, todoUpdated, todoDeleted } = todosSlice.actions
 
 export default todosSlice.reducer

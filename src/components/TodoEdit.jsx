@@ -9,8 +9,11 @@ import { styled } from "@mui/material/styles";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import { Textarea } from "@mui/joy";
 import IconButton from "@mui/material/IconButton";
-import { useDispatch, useSelector } from "react-redux";
-import { todoAdded, todoUpdated } from "../redux/todosSlice";
+import { useDispatch } from "react-redux";
+import { todoDeleted, todoUpdated } from "../redux/todosSlice";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import { Stack } from "@mui/material";
+import Proptypes from "prop-types";
 
 const CustomDialog = styled(Dialog)(({ theme }) => ({
   "& .MuiDialog-paper": {
@@ -38,7 +41,7 @@ export const TodoEdit = ({ todo }) => {
     setOpen(false);
   };
 
-  const onSavePostSubmit = () => {
+  const onSaveTodoSubmit = () => {
     if (title && content) {
       dispatch(
         todoUpdated({
@@ -49,6 +52,11 @@ export const TodoEdit = ({ todo }) => {
         })
       );
     }
+  };
+
+  const onDeleteTodoClick = () => {
+    dispatch(todoDeleted(todo.id));
+    handleClose();
   };
 
   return (
@@ -71,7 +79,19 @@ export const TodoEdit = ({ todo }) => {
           },
         }}
       >
-        <DialogTitle>Edit Task</DialogTitle>
+        <Stack
+          direction="row"
+          justifyContent="space-between"
+          alignItems="center"
+          spacing={2}
+        >
+          <DialogTitle>Edit Task</DialogTitle>
+          <IconButton onClick={onDeleteTodoClick}>
+            <DeleteForeverIcon
+              style={{ fontSize: 32, marginRight: 20, cursor: "pointer" }}
+            />
+          </IconButton>
+        </Stack>
         <DialogContent>
           <Textarea
             name="Neutral"
@@ -93,7 +113,7 @@ export const TodoEdit = ({ todo }) => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button type="click" onClick={onSavePostSubmit}>
+          <Button type="click" onClick={onSaveTodoSubmit}>
             Save
           </Button>
         </DialogActions>
@@ -102,4 +122,6 @@ export const TodoEdit = ({ todo }) => {
   );
 };
 
-
+TodoEdit.propTypes = {
+  todo: Proptypes.object,
+};
