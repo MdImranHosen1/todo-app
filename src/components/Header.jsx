@@ -19,14 +19,14 @@ export const Header = () => {
   return (
     <React.Fragment>
       <CssBaseline />
-      <Paper square sx={{ pb: "50px" }}>
+      <Paper square sx={{ pb: "20px" }}>
         <Typography
           variant="h5"
           gutterBottom
           component="div"
           sx={{ p: 2, pb: 0 }}
         >
-          Todo App
+          <b>Todo App</b>
         </Typography>
       </Paper>
       <AppBar position="fixed" color="primary" sx={{ top: "auto", bottom: 0 }}>
@@ -35,7 +35,7 @@ export const Header = () => {
             <MenuIcon />
           </IconButton>
           <TodoAdd></TodoAdd>
-         
+
           <Box sx={{ flexGrow: 1 }} />
           <IconButton color="inherit">
             <SearchIcon />
